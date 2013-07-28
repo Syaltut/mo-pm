@@ -1,4 +1,5 @@
 package Mo::required;
+use Carp ();
 my $MoPKG = "Mo::";
 $VERSION = 0.35;
 
@@ -13,7 +14,7 @@ $VERSION = 0.35;
             *{$caller_pkg."new"} = sub {
                 my $self = $old_constructor->(@_);
                 my %args = @_[1..$#_];
-                die $name." required" if !exists $args{$name};
+                Carp::croak($name." required") if !exists $args{$name};
                 $self;
             };
         }

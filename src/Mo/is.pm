@@ -1,4 +1,5 @@
 package Mo::is;$MoPKG = "Mo::";
+use Carp ();
 $VERSION = 0.35;
 
 *{$MoPKG.'is::e'} = sub {
@@ -8,7 +9,7 @@ $VERSION = 0.35;
         $args{is} or return $method;
         sub {
             $#_ && $args{is} eq 'ro' && caller ne 'Mo::coerce'
-              ? die $name.' is ro'
+              ?  Carp::croak($name.' is ro')
                 : $method->(@_)
         };
     };
